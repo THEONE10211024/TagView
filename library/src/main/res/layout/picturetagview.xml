@@ -3,13 +3,32 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:orientation="horizontal" >
+    android:orientation="horizontal">
+
+    <com.skyfishjy.library.RippleBackground
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:rb_color="#0099CC"
+        app:rb_duration="3000"
+        app:rb_radius="32dp"
+        app:rb_rippleAmount="4"
+        app:rb_scale="6">
+
+        <ImageView
+            android:id="@+id/img_left_drawable"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/tag_custom_icon_1" />
+    </com.skyfishjy.library.RippleBackground>
 
     <RelativeLayout
         android:id="@+id/loTag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_picturetagview_tagview_left" >
+        android:background="@drawable/bg_discovery_tag">
 
         <TextView
             android:id="@+id/tvPictureTagLabel"

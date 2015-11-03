@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.xiayong.library.R;
+
 /**
  * Created by xiayong on 11/2/15.
  */
@@ -57,10 +59,10 @@ public class TagView extends RelativeLayout implements TextView.OnEditorActionLi
     private void directionChange(){
         switch(direction){
             case LEFT:
-                loTag.setBackgroundResource(R.drawable.bg_picturetagview_tagview_left);
+                loTag.setBackgroundResource(R.drawable.bg_discovery_tag);
                 break;
             case RIGHT:
-                loTag.setBackgroundResource(R.drawable.bg_picturetagview_tagview_right);
+                loTag.setBackgroundResource(R.drawable.tag_custom_background_right_1);
                 break;
         }
     }
@@ -73,25 +75,25 @@ public class TagView extends RelativeLayout implements TextView.OnEditorActionLi
         setStatus(Status.NORMAL);
         return true;
     }
-    /** ³õÊ¼»¯ÊÂ¼ş **/
+    /** åˆå§‹åŒ–äº‹ä»¶ **/
     protected void initEvents(){
         edTagLabel.setOnEditorActionListener(this);
     }
     public void setStatus(Status status){
         switch(status){
             case NORMAL:
-                tvPictureTagLabel.setVisibility(View.VISIBLE);
-                etPictureTagLabel.clearFocus();
-                tvPictureTagLabel.setText(etPictureTagLabel.getText());
-                etPictureTagLabel.setVisibility(View.GONE);
-                //Òş²Ø¼üÅÌ
-                imm.hideSoftInputFromWindow(etPictureTagLabel.getWindowToken() , 0);
+                tvTagLabel.setVisibility(View.VISIBLE);
+                edTagLabel.clearFocus();
+                tvTagLabel.setText(edTagLabel.getText());
+                edTagLabel.setVisibility(View.GONE);
+                //éšè—é”®ç›˜
+                imm.hideSoftInputFromWindow(edTagLabel.getWindowToken() , 0);
                 break;
             case EDIT:
-                tvPictureTagLabel.setVisibility(View.GONE);
-                etPictureTagLabel.setVisibility(View.VISIBLE);
-                etPictureTagLabel.requestFocus();
-                //µ¯³ö¼üÅÌ
+                tvTagLabel.setVisibility(View.GONE);
+                edTagLabel.setVisibility(View.VISIBLE);
+                edTagLabel.requestFocus();
+                //å¼¹å‡ºé”®ç›˜
                 imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
                 break;
         }
