@@ -7,12 +7,13 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 /**
  * Created by xiayong on 11/2/15.
  * http://blog.csdn.net/lmj623565791/article/details/46858663
  */
-public class TagViewLayout extends RelativeLayout {
+public class TagViewLayout extends RelativeLayout implements View.OnClickListener{
 //    private static final int CLICKRANGE = 5;
 
 //    private Point startPoint;
@@ -60,19 +61,27 @@ public class TagViewLayout extends RelativeLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if(event.getAction() == MotionEvent.ACTION_DOWN){
-            addItem((int)event.getX(),(int)event.getY());
-        }
         dragHelper.processTouchEvent(event);
         return true;
     }
+    public void showAllTags(){
+        //TODO
+    }
+    public void hideAllTags(){
+        //TODO
+    }
     public void addItemRandomly(){
         //TODO
+        addItem(100,100);
     }
     private void addItem(int x, int y) {
         TagView view = null;
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        if (x > getWidth() * 0.5) {
+        params.leftMargin = x;
+        params.topMargin = y;
+        view = new TagView(getContext());
+        view.setDirection(TagView.Direction.LEFT);
+        /*if (x > getWidth() * 0.5) {
             params.leftMargin = x - TagView.getDefaultWidth();
             view = new TagView(getContext());
             view.setDirection(TagView.Direction.RIGHT);
@@ -80,15 +89,30 @@ public class TagViewLayout extends RelativeLayout {
             params.leftMargin = x;
             view = new TagView(getContext());
             view.setDirection(TagView.Direction.LEFT);
+        }*/
+
+        if (params.topMargin < 0) {
+            params.topMargin = 0;
+        }
+        else if ((params.topMargin + TagView.getDefaultHeight()) > getHeight()){
+            params.topMargin = getHeight() - TagView.getDefaultHeight();
         }
 
-        params.topMargin = y;
+        if(params.leftMargin <0){
+            params.leftMargin = 0;
+        }else if((params.leftMargin + TagView.getDefaultWidth()>getWidth())){
+            params.leftMargin = getWidth() - TagView.getDefaultWidth();
+        }
 
-        if (params.topMargin < 0) params.topMargin = 0;
-        else if ((params.topMargin + TagView.getDefaultWidth()) > getHeight())
-            params.topMargin = getHeight() - TagView.getDefaultHeight();
-
-
+//        view.setOnClickListener(this);//TODO TouchEvent conflicts with OnClick
         this.addView(view, params);
+        view.startAnimation();
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view instanceof TagView){
+            Toast.makeText(getContext(),"click",Toast.LENGTH_SHORT).show();
+        }
     }
 }

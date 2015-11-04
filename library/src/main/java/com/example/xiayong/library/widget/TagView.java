@@ -7,10 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.xiayong.library.R;
+import com.skyfishjy.library.RippleBackground;
 
 /**
  * Created by xiayong on 11/2/15.
@@ -20,8 +22,11 @@ public class TagView extends RelativeLayout implements TextView.OnEditorActionLi
     private TextView tvTagLabel;
     private EditText edTagLabel;
     private View loTag;
+    private RippleBackground rippleContent;
     private Direction direction = Direction.LEFT;
     private InputMethodManager imm;
+    private RippleCore imgLeftDrawable;
+
 
     private static final int DEFAULT_WIDTH = 80;
     private static final int DEFAULT_HEIGHT = 50;
@@ -41,32 +46,39 @@ public class TagView extends RelativeLayout implements TextView.OnEditorActionLi
 
     public TagView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context,attrs);
+        init(context, attrs);
     }
 
     private void init(Context context, AttributeSet attrs){
         imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        directionChange();
         initView(context);
         initEvents();
+        directionChange();
     }
     private void initView(Context context){
         LayoutInflater.from(context).inflate(R.layout.picturetagview, this,true);
         tvTagLabel = (TextView) findViewById(R.id.tvPictureTagLabel);
         edTagLabel = (EditText) findViewById(R.id.etPictureTagLabel);
         loTag = findViewById(R.id.loTag);
+        rippleContent = (RippleBackground) findViewById(R.id.ripple_content);
+        imgLeftDrawable = (RippleCore) findViewById(R.id.img_left_drawable);
+
     }
     private void directionChange(){
         switch(direction){
             case LEFT:
-                loTag.setBackgroundResource(R.drawable.bg_discovery_tag);
+                loTag.setBackgroundResource(R.drawable.bg_tag_left);
                 break;
             case RIGHT:
-                loTag.setBackgroundResource(R.drawable.tag_custom_background_right_1);
+                loTag.setBackgroundResource(R.drawable.bg_tag_right);
                 break;
         }
     }
 
+
+    public void startAnimation(){
+        rippleContent.startRippleAnimation();
+    }
     public void setDirection(Direction direction){
         this.direction = direction;
     }
@@ -79,6 +91,7 @@ public class TagView extends RelativeLayout implements TextView.OnEditorActionLi
     protected void initEvents(){
         edTagLabel.setOnEditorActionListener(this);
     }
+
     public void setStatus(Status status){
         switch(status){
             case NORMAL:

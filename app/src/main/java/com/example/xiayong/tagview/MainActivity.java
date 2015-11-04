@@ -8,24 +8,30 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
+import com.example.xiayong.library.widget.TagViewLayout;
 
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private TagViewLayout tagViewLayout;
+    private Button showTag;
+    private Button addTag;
+    private Button hideTag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        tagViewLayout = (TagViewLayout) findViewById(R.id.tagviewLayout);
+        showTag = (Button) findViewById(R.id.btn_show_tag);
+        addTag = (Button) findViewById(R.id.btn_add);
+        hideTag = (Button) findViewById(R.id.btn_hide_tag);
+        showTag.setOnClickListener(this);
+        addTag.setOnClickListener(this);
+        hideTag.setOnClickListener(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     @Override
@@ -48,5 +54,19 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_show_tag:
+                break;
+            case R.id.btn_add:
+                tagViewLayout.addItemRandomly();
+                break;
+            case R.id.btn_hide_tag:
+                break;
+        }
+
     }
 }

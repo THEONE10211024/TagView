@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
@@ -7,16 +7,16 @@
 
     <com.skyfishjy.library.RippleBackground
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/content"
+        android:id="@+id/ripple_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:rb_color="#0099CC"
         app:rb_duration="3000"
-        app:rb_radius="32dp"
+        app:rb_radius="2dp"
         app:rb_rippleAmount="4"
         app:rb_scale="6">
 
-        <ImageView
+        <com.example.xiayong.library.widget.RippleCore
             android:id="@+id/img_left_drawable"
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -28,7 +28,8 @@
         android:id="@+id/loTag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_discovery_tag">
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/bg_tag_left">
 
         <TextView
             android:id="@+id/tvPictureTagLabel"
@@ -58,4 +59,4 @@
             android:visibility="gone" />
     </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>
