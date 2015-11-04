@@ -78,6 +78,7 @@ public class TagView extends RelativeLayout implements TextView.OnEditorActionLi
 
     public void startAnimation(){
         rippleContent.startRippleAnimation();
+        imgLeftDrawable.startRippleAnimation();
     }
     public void setDirection(Direction direction){
         this.direction = direction;
