@@ -5,14 +5,14 @@
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
-    <com.skyfishjy.library.RippleBackground
+    <com.example.xiayong.library.widget.RippleBackground
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/ripple_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:rb_color="#0099CC"
         app:rb_duration="3000"
-        app:rb_radius="2dp"
+        app:rb_radius="10dp"
         app:rb_rippleAmount="4"
         app:rb_scale="6">
 
@@ -22,13 +22,14 @@
             android:layout_height="20dp"
             android:layout_centerInParent="true"
             android:src="@drawable/tag_custom_icon_1" />
-    </com.skyfishjy.library.RippleBackground>
+    </com.example.xiayong.library.widget.RippleBackground>
 
     <RelativeLayout
         android:id="@+id/loTag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
+        android:visibility="gone"
         android:background="@drawable/bg_tag_left">
 
         <TextView

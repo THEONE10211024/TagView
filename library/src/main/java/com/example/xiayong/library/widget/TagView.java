@@ -1,5 +1,7 @@
 package com.example.xiayong.library.widget;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
@@ -7,12 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.xiayong.library.R;
-import com.skyfishjy.library.RippleBackground;
 
 /**
  * Created by xiayong on 11/2/15.
@@ -77,8 +77,34 @@ public class TagView extends RelativeLayout implements TextView.OnEditorActionLi
 
 
     public void startAnimation(){
-        rippleContent.startRippleAnimation();
+
+        Animator backgroundAnimator = rippleContent.getRippleAnimator();
+        Animator coreAnimator = imgLeftDrawable.getCoreAnimator();
+        backgroundAnimator.removeAllListeners();
+        coreAnimator.removeAllListeners();
+        rippleContent.stopRippleAnimation();
+        imgLeftDrawable.stopRippleAnimation();
+
+        backgroundAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                rippleContent.setAnimationRunning(false);
+                imgLeftDrawable.startRippleAnimation();
+            }
+        });
+        coreAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                imgLeftDrawable.setAnimationRunning(false);
+                rippleContent.startRippleAnimation();
+            }
+        });
+
         imgLeftDrawable.startRippleAnimation();
+
+
     }
     public void setDirection(Direction direction){
         this.direction = direction;

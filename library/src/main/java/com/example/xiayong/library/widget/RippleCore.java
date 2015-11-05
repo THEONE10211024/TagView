@@ -1,5 +1,6 @@
 package com.example.xiayong.library.widget;
 
+import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
@@ -48,13 +49,24 @@ public class RippleCore extends ImageView {
         animatorSet.setDuration(duration);
         animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
         final ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(this, "ScaleX", 1.0f, scale);
-        scaleXAnimator.setRepeatCount(ObjectAnimator.INFINITE);
-        scaleXAnimator.setRepeatMode(ObjectAnimator.RESTART);
+        scaleXAnimator.setRepeatCount(1);
+//        scaleXAnimator.setRepeatMode(ObjectAnimator.RESTART);
+//        scaleXAnimator.setRepeatCount(ObjectAnimator.INFINITE);
+//        scaleXAnimator.setRepeatMode(ObjectAnimator.RESTART);
         final ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(this, "ScaleY", 1.0f, scale);
-        scaleYAnimator.setRepeatCount(ObjectAnimator.INFINITE);
-        scaleYAnimator.setRepeatMode(ObjectAnimator.RESTART);
+//        scaleYAnimator.setRepeatCount(ObjectAnimator.INFINITE);
+//        scaleYAnimator.setRepeatMode(ObjectAnimator.RESTART);
+        scaleYAnimator.setRepeatCount(1);
+//        scaleYAnimator.setRepeatMode(ObjectAnimator.RESTART);
 
         animatorSet.playTogether(scaleXAnimator, scaleYAnimator);
+    }
+    public Animator getCoreAnimator(){
+        return animatorSet;
+    }
+
+    public void setAnimationRunning(boolean running){
+        this.animationRunning = running;
     }
     public void startRippleAnimation(){
         if(!isRippleAnimationRunning()){
