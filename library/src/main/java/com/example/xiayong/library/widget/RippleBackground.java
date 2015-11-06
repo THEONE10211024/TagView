@@ -89,6 +89,7 @@ public class RippleBackground extends RelativeLayout{
 
         rippleParams=new LayoutParams((int)(2*(rippleRadius+rippleStrokeWidth)),(int)(2*(rippleRadius+rippleStrokeWidth)));
         rippleParams.addRule(CENTER_IN_PARENT, TRUE);
+//        rippleParams.addRule();
 
         animatorSet = new AnimatorSet();
         animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -99,8 +100,6 @@ public class RippleBackground extends RelativeLayout{
             addView(rippleView,rippleParams);
             rippleViewList.add(rippleView);
             final ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(rippleView, "ScaleX", 1.0f, rippleScale);
-            /*scaleXAnimator.setRepeatCount(ObjectAnimator.INFINITE);
-            scaleXAnimator.setRepeatMode(ObjectAnimator.RESTART);*/
             scaleXAnimator.setRepeatCount(REPEAT_COUNT);
             scaleXAnimator.setRepeatMode(ObjectAnimator.RESTART);
             scaleXAnimator.setStartDelay(i * rippleDelay);

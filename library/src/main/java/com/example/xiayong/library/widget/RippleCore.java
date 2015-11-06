@@ -15,6 +15,7 @@ import android.widget.ImageView;
 public class RippleCore extends ImageView {
     private static final int DEFAULT_DURATION_TIME=3000;
     private static final float DEFAULT_SCALE=6.0f;
+    private static final int REPEAT_COUNT = 2;
 
     private boolean animationRunning=false;
     private AnimatorSet animatorSet;
@@ -49,14 +50,14 @@ public class RippleCore extends ImageView {
         animatorSet.setDuration(duration);
         animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
         final ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(this, "ScaleX", 1.0f, scale);
-        scaleXAnimator.setRepeatCount(1);
+        scaleXAnimator.setRepeatCount(REPEAT_COUNT);
 //        scaleXAnimator.setRepeatMode(ObjectAnimator.RESTART);
 //        scaleXAnimator.setRepeatCount(ObjectAnimator.INFINITE);
 //        scaleXAnimator.setRepeatMode(ObjectAnimator.RESTART);
         final ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(this, "ScaleY", 1.0f, scale);
 //        scaleYAnimator.setRepeatCount(ObjectAnimator.INFINITE);
 //        scaleYAnimator.setRepeatMode(ObjectAnimator.RESTART);
-        scaleYAnimator.setRepeatCount(1);
+        scaleYAnimator.setRepeatCount(REPEAT_COUNT);
 //        scaleYAnimator.setRepeatMode(ObjectAnimator.RESTART);
 
         animatorSet.playTogether(scaleXAnimator, scaleYAnimator);
