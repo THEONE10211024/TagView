@@ -10,7 +10,7 @@
         android:id="@+id/tagviewLayout"
         android:layout_width="match_parent"
         android:layout_height="400dp"
-        android:background="@android:color/white"/>
+        android:background="@drawable/tag_imgground"/>
 
     <LinearLayout
         android:orientation="horizontal"

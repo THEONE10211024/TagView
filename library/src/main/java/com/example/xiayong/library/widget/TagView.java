@@ -56,10 +56,11 @@ public class TagView extends RelativeLayout implements TextView.OnEditorActionLi
         directionChange();
     }
     private void initView(Context context){
-        LayoutInflater.from(context).inflate(R.layout.picturetagview, this,true);
+        LayoutInflater.from(context).inflate(R.layout.picture_tagview, this,true);
         tvTagLabel = (TextView) findViewById(R.id.tvPictureTagLabel);
         edTagLabel = (EditText) findViewById(R.id.etPictureTagLabel);
         loTag = findViewById(R.id.loTag);
+        loTag.getBackground().setAlpha(60);//TODO 设置右侧Tag的透明效果
         rippleContent = (RippleBackground) findViewById(R.id.ripple_content);
         imgLeftDrawable = (RippleCore) findViewById(R.id.img_left_drawable);
 
@@ -138,7 +139,7 @@ public class TagView extends RelativeLayout implements TextView.OnEditorActionLi
                 break;
         }
     }
-    @Override
+    /*@Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
         View parent = (View) getParent();
@@ -151,7 +152,7 @@ public class TagView extends RelativeLayout implements TextView.OnEditorActionLi
             direction = Direction.RIGHT;
         }
         directionChange();
-    }
+    }*/
     public static int getDefaultWidth(){
         return DEFAULT_WIDTH;
     }

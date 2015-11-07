@@ -11,4 +11,13 @@
         <enum name="strokeRipple" value="1"/>
     </attr>
 </declare-styleable>
+    <declare-styleable name="RippleCore">
+        <attr name="rc_type" format="enum">
+            <enum name="tag" value="0"/>
+            <enum name="place" value="1"/>
+            <enum name="people" value="2"/>
+        </attr>
+        <attr name="rc_scale" format="float"/>
+        <attr name="rc_duration" format="integer"/>
+    </declare-styleable>
 </resources>

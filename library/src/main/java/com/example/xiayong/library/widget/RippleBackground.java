@@ -27,7 +27,7 @@ public class RippleBackground extends RelativeLayout{
     private static final int DEFAULT_DURATION_TIME=3000;
     private static final float DEFAULT_SCALE=6.0f;
     private static final int DEFAULT_FILL_TYPE=0;
-    private static final int REPEAT_COUNT = 2;
+    private static final int REPEAT_COUNT = 0;
 
     private int rippleColor;
     private float rippleStrokeWidth;

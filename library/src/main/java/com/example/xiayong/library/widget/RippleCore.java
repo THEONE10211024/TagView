@@ -5,22 +5,33 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
+
+import com.example.xiayong.library.R;
 
 /**
  * Created by xiayong on 11/4/15.
  */
 public class RippleCore extends ImageView {
-    private static final int DEFAULT_DURATION_TIME=3000;
-    private static final float DEFAULT_SCALE=6.0f;
-    private static final int REPEAT_COUNT = 2;
+    private static final int DEFAULT_DURATION_TIME=500;
+    private static final float DEFAULT_SCALE=1.25f;
+    private static final int DEFAULT_FILL_TYPE = 0;
 
     private boolean animationRunning=false;
     private AnimatorSet animatorSet;
     private int duration;
     private float scale;
+    private Type type;
+
+    public enum Type{
+        TAG,
+        PLACE,
+        PEOPLE
+    }
 
     public RippleCore(Context context) {
         super(context);
@@ -44,23 +55,34 @@ public class RippleCore extends ImageView {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        scale = 1.5f;
-        duration = 1000;
+        final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.RippleBackground);
+        int t=typedArray.getInt(R.styleable.RippleCore_rc_type,DEFAULT_FILL_TYPE);
+        setType(t);
+        scale = typedArray.getFloat(R.styleable.RippleCore_rc_scale,DEFAULT_SCALE);
+        duration = typedArray.getInt(R.styleable.RippleBackground_rb_duration,DEFAULT_DURATION_TIME);
+        typedArray.recycle();
+
+        setImageByType();
         animatorSet = new AnimatorSet();
         animatorSet.setDuration(duration);
         animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
-        final ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(this, "ScaleX", 1.0f, scale);
-        scaleXAnimator.setRepeatCount(REPEAT_COUNT);
-//        scaleXAnimator.setRepeatMode(ObjectAnimator.RESTART);
-//        scaleXAnimator.setRepeatCount(ObjectAnimator.INFINITE);
-//        scaleXAnimator.setRepeatMode(ObjectAnimator.RESTART);
-        final ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(this, "ScaleY", 1.0f, scale);
-//        scaleYAnimator.setRepeatCount(ObjectAnimator.INFINITE);
-//        scaleYAnimator.setRepeatMode(ObjectAnimator.RESTART);
-        scaleYAnimator.setRepeatCount(REPEAT_COUNT);
-//        scaleYAnimator.setRepeatMode(ObjectAnimator.RESTART);
-
+        final ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(this, "ScaleX", 1.0f, 1.0f/scale,1.0f*scale,1.0f);
+        final ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(this, "ScaleY", 1.0f, 1.0f/scale,1.0f*scale,1.0f);
         animatorSet.playTogether(scaleXAnimator, scaleYAnimator);
+
+    }
+    private void setImageByType(){
+        switch (type){
+            case TAG:
+                setImageResource(R.drawable.tag_custom_icon);
+                break;
+            case PLACE:
+                setImageResource(R.drawable.tag_poi_icon);
+                break;
+            case PEOPLE:
+                setImageResource(R.drawable.tag_user_icon);
+                break;
+        }
     }
     public Animator getCoreAnimator(){
         return animatorSet;
@@ -83,6 +105,21 @@ public class RippleCore extends ImageView {
         }
     }
 
+    private void setType(int t){
+        switch (t){
+            case 0:
+                type = Type.TAG;
+                break;
+            case 1:
+                type = Type.PLACE;
+                break;
+            case 2:
+                type = Type.PEOPLE;
+                break;
+            default:
+                break;
+        }
+    }
     public boolean isRippleAnimationRunning(){
         return animationRunning;
     }
