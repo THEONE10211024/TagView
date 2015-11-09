@@ -28,10 +28,11 @@ public class TagView extends RelativeLayout implements TextView.OnEditorActionLi
     private Direction direction = Direction.LEFT;
     private InputMethodManager imm;
     private RippleCore imgLeftDrawable;
-
+    private float alpha;//TODO
 
     private static final int DEFAULT_WIDTH = 80;
     private static final int DEFAULT_HEIGHT = 50;
+    private static final float DEFAULT_ALPHA = 0.8f;
 
     public enum Status{NORMAL,EDIT};
     public enum Direction{LEFT,RIGHT};
@@ -62,7 +63,8 @@ public class TagView extends RelativeLayout implements TextView.OnEditorActionLi
         tvTagLabel = (TextView) findViewById(R.id.tvPictureTagLabel);
         edTagLabel = (EditText) findViewById(R.id.etPictureTagLabel);
         loTag = findViewById(R.id.loTag);
-        loTag.getBackground().setAlpha(60);//TODO 设置右侧Tag的透明效果
+        loTag.setAlpha(0.8f);//TODO
+//        loTag.getBackground().setAlpha(60);//TODO 设置右侧Tag的透明效果
         rippleContent = (RippleBackground) findViewById(R.id.ripple_content);
         imgLeftDrawable = (RippleCore) findViewById(R.id.img_left_drawable);
 

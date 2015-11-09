@@ -34,6 +34,10 @@
         android:layout_toRightOf="@id/ripple_content"
         android:visibility="visible"
         android:layout_centerVertical="true"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingRight="7dp"
+        android:paddingLeft="20dp"
         android:background="@drawable/bg_tag_left">
 
         <TextView
