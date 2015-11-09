@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:showIn="@layout/activity_main" tools:context=".MainActivity">
 
     <com.example.xiayong.library.widget.TagViewLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/tagviewLayout"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:background="@drawable/tag_imgground"/>
+        android:layout_height="500dp"
+        app:tl_scaleType="centerInside"
+        app:tl_background="@drawable/tag_imgground"/>
 
     <LinearLayout
         android:orientation="horizontal"

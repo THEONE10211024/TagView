@@ -55,9 +55,9 @@ public class RippleCore extends ImageView {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.RippleBackground);
+        final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.RippleCore);
         int t=typedArray.getInt(R.styleable.RippleCore_rc_type,DEFAULT_FILL_TYPE);
-        setType(t);
+        type = Type.values()[t];
         scale = typedArray.getFloat(R.styleable.RippleCore_rc_scale,DEFAULT_SCALE);
         duration = typedArray.getInt(R.styleable.RippleBackground_rb_duration,DEFAULT_DURATION_TIME);
         typedArray.recycle();

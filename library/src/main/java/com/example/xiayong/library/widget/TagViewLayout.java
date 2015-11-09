@@ -1,39 +1,58 @@
 package com.example.xiayong.library.widget;
 
 import android.content.Context;
-import android.graphics.Point;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import com.example.xiayong.library.R;
 
 /**
  * Created by xiayong on 11/2/15.
  * http://blog.csdn.net/lmj623565791/article/details/46858663
  */
 public class TagViewLayout extends RelativeLayout implements View.OnClickListener{
-//    private static final int CLICKRANGE = 5;
 
-//    private Point startPoint;
+    private ImageView imgBackground;
     private ViewDragHelper dragHelper;
 
 
     public TagViewLayout(Context context) {
         super(context);
-        init();
+        init(context,null);
     }
 
     public TagViewLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+        init(context, attrs);
     }
 
-    private void init() {
+    private void init(Context context, AttributeSet attrs) {
+        final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TagViewLayout);
+        Drawable d = typedArray.getDrawable(R.styleable.TagViewLayout_tl_background);
+        int scaleType_int = typedArray.getInt(R.styleable.TagViewLayout_tl_scaleType,0);
+        typedArray.recycle();
+
+        imgBackground = new ImageView(getContext());
+        imgBackground.setImageDrawable(d);
+        ImageView.ScaleType scaleType = ImageView.ScaleType.values()[scaleType_int];
+        imgBackground.setScaleType(scaleType);
+        LayoutParams imgParams=new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
+        imgParams.addRule(CENTER_IN_PARENT, TRUE);
+        addView(imgBackground, imgParams);
+
         dragHelper = ViewDragHelper.create(this, 1.0f, new ViewDragHelper.Callback() {
             @Override
             public boolean tryCaptureView(View child, int pointerId) {
+                if (child == imgBackground){
+                    return false;
+                }
                 return true;
             }
 

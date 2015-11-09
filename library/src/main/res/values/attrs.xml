@@ -1,23 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources> <declare-styleable name="RippleBackground">
-    <attr name="rb_color" format="color" />
-    <attr name="rb_strokeWidth" format="dimension"/>
-    <attr name="rb_radius" format="dimension"/>
-    <attr name="rb_duration" format="integer"/>
-    <attr name="rb_rippleAmount" format="integer"/>
-    <attr name="rb_scale" format="float"/>
-    <attr name="rb_type" format="enum">
-        <enum name="fillRipple" value="0"/>
-        <enum name="strokeRipple" value="1"/>
-    </attr>
-</declare-styleable>
+<resources>
+    <declare-styleable name="TagViewLayout">
+        <attr name="tl_background" format="reference" />
+        <attr name="tl_scaleType" format="enum">
+            <enum name="center" value="5"/>
+            <enum name="centerCrop" value="6"/>
+            <enum name="centerInside" value="7"/>
+            <enum name="fitCenter" value="3"/>
+            <enum name="fitEnd" value="4"/>
+            <enum name="fitStart" value="2"/>
+            <enum name="fitXY" value="1"/>
+            <enum name="martrix" value="0"/>
+          </attr>
+    </declare-styleable>
+
+    <declare-styleable name="RippleBackground">
+        <attr name="rb_color" format="color" />
+        <attr name="rb_strokeWidth" format="dimension" />
+        <attr name="rb_radius" format="dimension" />
+        <attr name="rb_duration" format="integer" />
+        <attr name="rb_rippleAmount" format="integer" />
+        <attr name="rb_scale" format="float" />
+        <attr name="rb_type" format="enum">
+            <enum name="fillRipple" value="0" />
+            <enum name="strokeRipple" value="1" />
+        </attr>
+    </declare-styleable>
+
     <declare-styleable name="RippleCore">
         <attr name="rc_type" format="enum">
-            <enum name="tag" value="0"/>
-            <enum name="place" value="1"/>
-            <enum name="people" value="2"/>
+            <enum name="tag" value="0" />
+            <enum name="place" value="1" />
+            <enum name="people" value="2" />
         </attr>
-        <attr name="rc_scale" format="float"/>
-        <attr name="rc_duration" format="integer"/>
+        <attr name="rc_scale" format="float" />
+        <attr name="rc_duration" format="integer" />
     </declare-styleable>
+
 </resources>
