@@ -12,6 +12,9 @@ import android.widget.Button;
 
 import com.example.xiayong.library.widget.TagViewLayout;
 
+/**
+ *
+ */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TagViewLayout tagViewLayout;
