@@ -5,6 +5,8 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,10 +19,11 @@ import com.example.xiayong.library.R;
  * Created by xiayong on 11/2/15.
  * http://blog.csdn.net/lmj623565791/article/details/46858663
  */
-public class TagViewLayout extends RelativeLayout implements View.OnClickListener{
+public class TagViewLayout extends RelativeLayout implements View.OnTouchListener{
 
     private ImageView imgBackground;
     private ViewDragHelper dragHelper;
+    private GestureDetector gestureDetector;
 
 
     public TagViewLayout(Context context) {
@@ -47,6 +50,25 @@ public class TagViewLayout extends RelativeLayout implements View.OnClickListene
         imgParams.addRule(CENTER_IN_PARENT, TRUE);
         addView(imgBackground, imgParams);
 
+        gestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                Toast.makeText(getContext(),"onDoubleTap",Toast.LENGTH_SHORT).show();
+                return super.onDoubleTap(e);
+            }
+
+            @Override
+            public boolean onDoubleTapEvent(MotionEvent e) {
+                Toast.makeText(getContext(),"onDoubleTapEvent",Toast.LENGTH_SHORT).show();
+                return super.onDoubleTapEvent(e);
+            }
+
+            @Override
+            public boolean onSingleTapConfirmed(MotionEvent e) {
+                Toast.makeText(getContext(),"onSingleTapConfirmed",Toast.LENGTH_SHORT).show();
+                return super.onSingleTapConfirmed(e);
+            }
+        });
         dragHelper = ViewDragHelper.create(this, 1.0f, new ViewDragHelper.Callback() {
             @Override
             public boolean tryCaptureView(View child, int pointerId) {
@@ -75,6 +97,7 @@ public class TagViewLayout extends RelativeLayout implements View.OnClickListene
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
+        Log.d("xiayong","onInterceptTouchEvent:"+dragHelper.shouldInterceptTouchEvent(event));
         return dragHelper.shouldInterceptTouchEvent(event);
     }
 
@@ -91,7 +114,7 @@ public class TagViewLayout extends RelativeLayout implements View.OnClickListene
     }
     public void addItemRandomly(){
         //TODO
-        addItem(100,100);
+        addItem(100, 100);
     }
     private void addItem(int x, int y) {
         TagView view = null;
@@ -124,14 +147,14 @@ public class TagViewLayout extends RelativeLayout implements View.OnClickListene
         }
 
 //        view.setOnClickListener(this);//TODO TouchEvent conflicts with OnClick
+        view.setOnTouchListener(this);
         this.addView(view, params);
         view.startAnimation();
     }
 
+
     @Override
-    public void onClick(View view) {
-        if(view instanceof TagView){
-            Toast.makeText(getContext(),"click",Toast.LENGTH_SHORT).show();
-        }
+    public boolean onTouch(View v, MotionEvent event) {
+        return gestureDetector.onTouchEvent(event);
     }
 }
