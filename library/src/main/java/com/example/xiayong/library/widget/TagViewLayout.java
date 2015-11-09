@@ -148,6 +148,7 @@ public class TagViewLayout extends RelativeLayout implements View.OnTouchListene
 
 //        view.setOnClickListener(this);//TODO TouchEvent conflicts with OnClick
         view.setOnTouchListener(this);
+        view.setClickable(true);
         this.addView(view, params);
         view.startAnimation();
     }
@@ -155,6 +156,7 @@ public class TagViewLayout extends RelativeLayout implements View.OnTouchListene
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        Log.d("xiayong","onTouch:"+gestureDetector.onTouchEvent(event));
         return gestureDetector.onTouchEvent(event);
     }
 }
