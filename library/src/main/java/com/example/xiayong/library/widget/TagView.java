@@ -4,13 +4,17 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.xiayong.library.R;
 
@@ -26,6 +30,7 @@ public class TagView extends RelativeLayout implements TextView.OnEditorActionLi
     private View loTag;
     private RippleBackground rippleContent;
     private Direction direction = Direction.LEFT;
+    private Status status = Status.NORMAL;
     private InputMethodManager imm;
     private RippleCore imgLeftDrawable;
     private float alpha;//TODO
@@ -33,6 +38,7 @@ public class TagView extends RelativeLayout implements TextView.OnEditorActionLi
     private static final int DEFAULT_WIDTH = 80;
     private static final int DEFAULT_HEIGHT = 50;
     private static final float DEFAULT_ALPHA = 0.8f;
+
 
     public enum Status{NORMAL,EDIT};
     public enum Direction{LEFT,RIGHT};

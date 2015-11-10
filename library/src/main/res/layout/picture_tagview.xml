@@ -9,14 +9,14 @@
     <com.example.xiayong.library.widget.RippleBackground
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/ripple_content"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_centerVertical="true"
         app:rb_color="#000000"
         app:rb_duration="1000"
         app:rb_radius="5dp"
         app:rb_rippleAmount="2"
-        app:rb_scale="4">
+        app:rb_scale="3">
 
         <com.example.xiayong.library.widget.RippleCore
             android:id="@+id/img_left_drawable"
@@ -30,20 +30,17 @@
         android:id="@+id/loTag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="-25dp"
+        android:layout_marginLeft="-15dp"
         android:layout_toRightOf="@id/ripple_content"
         android:visibility="visible"
         android:layout_centerVertical="true"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:paddingRight="7dp"
-        android:paddingLeft="20dp"
         android:background="@drawable/bg_tag_left">
 
         <TextView
             android:id="@+id/tvPictureTagLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
             android:background="@null"
             android:gravity="center_vertical"
             android:hint="标签"
@@ -57,6 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
+            android:layout_marginLeft="3dp"
             android:gravity="center_vertical"
             android:hint="标签"
             android:imeOptions="actionDone"
