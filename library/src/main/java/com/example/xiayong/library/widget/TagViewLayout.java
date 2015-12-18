@@ -1,5 +1,7 @@
 package com.example.xiayong.library.widget;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
@@ -10,11 +12,15 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.xiayong.library.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by xiayong on 11/2/15.
@@ -23,9 +29,11 @@ import com.example.xiayong.library.R;
  */
 public class TagViewLayout extends RelativeLayout implements View.OnTouchListener{
 
+    private List<TagView> tagViews;
     private ImageView imgBackground;
     private ViewDragHelper dragHelper;
     private GestureDetector gestureDetector;
+
 
     public TagViewLayout(Context context) {
         super(context);
@@ -43,6 +51,7 @@ public class TagViewLayout extends RelativeLayout implements View.OnTouchListene
         int scaleType_int = typedArray.getInt(R.styleable.TagViewLayout_tl_scaleType, 0);
         typedArray.recycle();
 
+        tagViews = new ArrayList<>();
         imgBackground = new ImageView(getContext());
         imgBackground.setImageDrawable(d);
         ImageView.ScaleType scaleType = ImageView.ScaleType.values()[scaleType_int];
@@ -50,25 +59,19 @@ public class TagViewLayout extends RelativeLayout implements View.OnTouchListene
         LayoutParams imgParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         imgParams.addRule(CENTER_IN_PARENT, TRUE);
         addView(imgBackground, imgParams);
+
         gestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onDoubleTap(MotionEvent e) {
-//                Toast.makeText(getContext(), "onDoubleTap", Toast.LENGTH_SHORT).show();
                 Log.d("xiayong_g","onDoubleTap");
-                return true;
-            }
-
-            @Override
-            public boolean onDoubleTapEvent(MotionEvent e) {
-//                Toast.makeText(getContext(),"onDoubleTapEvent",Toast.LENGTH_SHORT).show();
-                Log.d("xiayong_g","onDoubleTapEvent");
+                tagViews.get(0).setDirection(TagView.Direction.LEFT);
                 return true;
             }
 
             @Override
             public boolean onSingleTapConfirmed(MotionEvent e) {
-//                Toast.makeText(getContext(),"onSingleTapConfirmed",Toast.LENGTH_SHORT).show();
                 Log.d("xiayong_g","onSingleTapConfirmed");
+                tagViews.get(0).setDirection(TagView.Direction.RIGHT);
                 return true;
             }
         });
@@ -128,6 +131,13 @@ public class TagViewLayout extends RelativeLayout implements View.OnTouchListene
 
     public void showAllTags() {
         //TODO
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.setDuration(500);
+        animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
+        final ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(this, "ScaleX", 1.0f, 1.1f,0.0f);
+        final ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(this, "ScaleY", 1.0f, 1.1f,0.0f);
+//        animatorSet.add
+        animatorSet.playTogether(scaleXAnimator, scaleYAnimator);
     }
 
     public void hideAllTags() {
@@ -136,7 +146,7 @@ public class TagViewLayout extends RelativeLayout implements View.OnTouchListene
 
     public void addItemRandomly() {
         //TODO
-        addItem(100, 100);
+        addItem(300, 300);
     }
 
     private void addItem(int x, int y) {
@@ -146,16 +156,6 @@ public class TagViewLayout extends RelativeLayout implements View.OnTouchListene
         params.topMargin = y;
         view = new TagView(getContext());
         view.setDirection(TagView.Direction.LEFT);
-        /*if (x > getWidth() * 0.5) {
-            params.leftMargin = x - TagView.getDefaultWidth();
-            view = new TagView(getContext());
-            view.setDirection(TagView.Direction.RIGHT);
-        } else {
-            params.leftMargin = x;
-            view = new TagView(getContext());
-            view.setDirection(TagView.Direction.LEFT);
-        }*/
-
         if (params.topMargin < 0) {
             params.topMargin = 0;
         } else if ((params.topMargin + TagView.getDefaultHeight()) > getHeight()) {
@@ -168,9 +168,9 @@ public class TagViewLayout extends RelativeLayout implements View.OnTouchListene
             params.leftMargin = getWidth() - TagView.getDefaultWidth();
         }
 
-//        view.setOnClickListener(this);//TODO TouchEvent conflicts with OnClick
         view.setOnTouchListener(this);
         view.setClickable(true);
+        tagViews.add(view);
         this.addView(view, params);
         view.startAnimation();
     }

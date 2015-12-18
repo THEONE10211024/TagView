@@ -30,8 +30,8 @@
         android:id="@+id/loTag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="-15dp"
         android:layout_toRightOf="@id/ripple_content"
+        android:layout_marginLeft="-15dp"
         android:visibility="visible"
         android:layout_centerVertical="true"
         android:background="@drawable/bg_tag_left">

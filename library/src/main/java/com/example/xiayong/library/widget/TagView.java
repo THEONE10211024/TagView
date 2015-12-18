@@ -2,19 +2,17 @@ package com.example.xiayong.library.widget;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.xiayong.library.R;
 
@@ -27,25 +25,31 @@ public class TagView extends RelativeLayout implements TextView.OnEditorActionLi
 
     private TextView tvTagLabel;
     private EditText edTagLabel;
-    private View loTag;
+    private RelativeLayout loTag;
     private RippleBackground rippleContent;
     private Direction direction = Direction.LEFT;
     private Status status = Status.NORMAL;
     private InputMethodManager imm;
     private RippleCore imgLeftDrawable;
     private float alpha;//TODO
+    private LayoutParams loTagParams;
 
     private static final int DEFAULT_WIDTH = 80;
     private static final int DEFAULT_HEIGHT = 50;
     private static final float DEFAULT_ALPHA = 0.8f;
 
 
-    public enum Status{NORMAL,EDIT};
-    public enum Direction{LEFT,RIGHT};
+    public enum Status {NORMAL, EDIT}
+
+    ;
+
+    public enum Direction {LEFT, RIGHT}
+
+    ;
 
     public TagView(Context context) {
         super(context);
-        init(context,null);
+        init(context, null);
     }
 
     public TagView(Context context, AttributeSet attrs) {
@@ -58,36 +62,49 @@ public class TagView extends RelativeLayout implements TextView.OnEditorActionLi
         init(context, attrs);
     }
 
-    private void init(Context context, AttributeSet attrs){
-        imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+    private void init(Context context, AttributeSet attrs) {
+        imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         initView(context);
         initEvents();
         directionChange();
     }
-    private void initView(Context context){
-        LayoutInflater.from(context).inflate(R.layout.picture_tagview, this,true);
+
+    private void initView(Context context) {
+        LayoutInflater.from(context).inflate(R.layout.picture_tagview, this, true);
         tvTagLabel = (TextView) findViewById(R.id.tvPictureTagLabel);
         edTagLabel = (EditText) findViewById(R.id.etPictureTagLabel);
-        loTag = findViewById(R.id.loTag);
+        loTag = (RelativeLayout) findViewById(R.id.loTag);
         loTag.setAlpha(0.8f);//TODO
-//        loTag.getBackground().setAlpha(60);//TODO 设置右侧Tag的透明效果
         rippleContent = (RippleBackground) findViewById(R.id.ripple_content);
         imgLeftDrawable = (RippleCore) findViewById(R.id.img_left_drawable);
-
-    }
-    private void directionChange(){
-        switch(direction){
-            case LEFT:
-                loTag.setBackgroundResource(R.drawable.bg_tag_left);
-                break;
-            case RIGHT:
-                loTag.setBackgroundResource(R.drawable.bg_tag_right);
-                break;
-        }
+        loTagParams = (LayoutParams) loTag.getLayoutParams();
     }
 
+    private void directionChange() {
+        //TODO 根据direction来判断左旋转还是右旋转
+        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(this, "rotationY",0f,180f);
+        objectAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+        objectAnimator.setDuration(500);
+        objectAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                resetText();
+            }
+        });
+        objectAnimator.start();
+    }
 
-    public void startAnimation(){
+
+    private void resetText(){
+       //TODO
+    }
+    public void show(){
+        //TODO
+    }
+    public void hide(){
+
+    }
+    public void startAnimation() {
 
         Animator backgroundAnimator = rippleContent.getRippleAnimator();
         Animator coreAnimator = imgLeftDrawable.getCoreAnimator();
@@ -117,28 +134,36 @@ public class TagView extends RelativeLayout implements TextView.OnEditorActionLi
 
 
     }
-    public void setDirection(Direction direction){
-        this.direction = direction;
+
+    public void setDirection(Direction direction) {
+        if (this.direction != direction) {
+            this.direction = direction;
+            directionChange();
+        }
     }
+
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         setStatus(Status.NORMAL);
         return true;
     }
-    /** 初始化事件 **/
-    protected void initEvents(){
+
+    /**
+     * 初始化事件 *
+     */
+    protected void initEvents() {
         edTagLabel.setOnEditorActionListener(this);
     }
 
-    public void setStatus(Status status){
-        switch(status){
+    public void setStatus(Status status) {
+        switch (status) {
             case NORMAL:
                 tvTagLabel.setVisibility(View.VISIBLE);
                 edTagLabel.clearFocus();
                 tvTagLabel.setText(edTagLabel.getText());
                 edTagLabel.setVisibility(View.GONE);
                 //隐藏键盘
-                imm.hideSoftInputFromWindow(edTagLabel.getWindowToken() , 0);
+                imm.hideSoftInputFromWindow(edTagLabel.getWindowToken(), 0);
                 break;
             case EDIT:
                 tvTagLabel.setVisibility(View.GONE);
@@ -149,6 +174,7 @@ public class TagView extends RelativeLayout implements TextView.OnEditorActionLi
                 break;
         }
     }
+
     /*@Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
@@ -163,10 +189,11 @@ public class TagView extends RelativeLayout implements TextView.OnEditorActionLi
         }
         directionChange();
     }*/
-    public static int getDefaultWidth(){
+    public static int getDefaultWidth() {
         return DEFAULT_WIDTH;
     }
-    public static int getDefaultHeight(){
+
+    public static int getDefaultHeight() {
         return DEFAULT_HEIGHT;
     }
 }
